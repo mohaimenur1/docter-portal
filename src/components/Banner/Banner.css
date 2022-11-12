@@ -1,0 +1,15 @@
+/** @format */
+
+.banner-btn-bg {
+  background-color: #7d0633;
+  color: white;
+}
+
+.banner-btn-bg:hover {
+  background-color: #670428;
+  color: white;
+}
+
+.bannner-text-color {
+  color: #7d0633;
+}
