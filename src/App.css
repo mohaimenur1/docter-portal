@@ -6,6 +6,10 @@
  * @format
  */
 
+.priamry-text-color {
+  color: #7d0633;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
