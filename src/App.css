@@ -10,6 +10,16 @@
   color: #7d0633;
 }
 
+.primary-btn-color {
+  background-color: #7d0633;
+  color: white;
+}
+
+.primary-btn-color:hover {
+  background-color: #a10742;
+  color: white;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
