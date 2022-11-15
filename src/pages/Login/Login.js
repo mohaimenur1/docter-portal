@@ -1,12 +1,16 @@
 /** @format */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import './Login.css';
 
 const Login = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
 
   const handleLogin = (data) => {
     console.log(data);
@@ -22,14 +26,17 @@ const Login = () => {
           </label>
           <input
             type='email'
-            {...register('email')}
+            {...register('email', { required: 'Email Address is required' })}
+            aria-invalid={errors.email ? 'true' : 'false'}
             className='form-control'
             id='exampleInputEmail1'
             aria-describedby='emailHelp'
           />
-          <div id='emailHelp' className='form-text'>
-            We'll never share your email with anyone else.
-          </div>
+          {errors.email && (
+            <p className='text-danger' role='alert mt-2'>
+              {errors.email?.message}
+            </p>
+          )}
         </div>
         <div className='mb-3'>
           <label htmlFor='exampleInputPassword1' className='form-label'>
@@ -37,10 +44,18 @@ const Login = () => {
           </label>
           <input
             type='password'
-            {...register('password')}
+            {...register('password', {
+              required: 'Password is Required',
+              maxLength: { value: 6, message: 'Password must be 6 charecter' },
+            })}
             className='form-control'
             id='exampleInputPassword1'
           />
+          {errors.password && (
+            <p className='text-danger' role='alert'>
+              {errors.password?.message}
+            </p>
+          )}
         </div>
         <div className='mb-3 form-check'>
           <input

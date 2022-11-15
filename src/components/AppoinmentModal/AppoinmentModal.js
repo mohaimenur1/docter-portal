@@ -25,9 +25,8 @@ const AppoinmentModal = ({ selectedDate, treatment, setTreatment }) => {
       phone,
     };
 
-    setTreatment(null);
-
     console.log(details);
+    setTreatment(null);
   };
 
   return (
