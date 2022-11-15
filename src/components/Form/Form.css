@@ -1,0 +1,13 @@
+/** @format */
+
+.card {
+  border: none;
+}
+
+a {
+  color: brown;
+}
+
+a:hover {
+  color: rgb(213, 45, 45);
+}

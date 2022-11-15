@@ -1,7 +1,6 @@
 /** @format */
 
 import React from 'react';
-import AppoinmentModal from '../AppoinmentModal/AppoinmentModal';
 import './AppoinmentOption.css';
 
 const AppoinmentOption = ({ appoinment, treatment, setTreatment }) => {

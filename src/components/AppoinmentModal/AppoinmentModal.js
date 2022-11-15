@@ -1,9 +1,35 @@
 /** @format */
 
+import { format } from 'date-fns';
 import React from 'react';
+import './AppoinmentModal.css';
 
-const AppoinmentModal = ({ treatment }) => {
-  //   console.log(treatment);
+const AppoinmentModal = ({ selectedDate, treatment, setTreatment }) => {
+  const date = format(selectedDate, 'PPP');
+
+  const handleBooking = (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const patienName = form.name.value;
+    const slot = form.slot.value;
+    const email = form.email.value;
+    const phone = form.phone.value;
+
+    const details = {
+      appoinmentDate: date,
+      slot,
+      treatment: treatment?.name,
+      patient: patienName,
+      email,
+      phone,
+    };
+
+    setTreatment(null);
+
+    console.log(details);
+  };
+
   return (
     <div>
       <div
@@ -11,7 +37,7 @@ const AppoinmentModal = ({ treatment }) => {
         id='exampleModal'
         data-bs-backdrop='static'
         data-bs-keyboard='false'
-        tabindex='-1'
+        tabIndex='-1'
         aria-labelledby='exampleModalLabel'
         aria-hidden='true'
       >
@@ -28,7 +54,79 @@ const AppoinmentModal = ({ treatment }) => {
                 aria-label='Close'
               ></button>
             </div>
-            <div className='modal-body'>...</div>
+            <div className='modal-body'>
+              <form onSubmit={handleBooking}>
+                <div className='form-outline'>
+                  <label className='form-label' htmlFor='formControlLg'>
+                    Date
+                  </label>
+                  <input
+                    type='text'
+                    id='formControlLg'
+                    value={date}
+                    disabled
+                    className='form-control form-control-lg'
+                  />
+                </div>
+                <div className='form-outline'>
+                  <label className='form-label' htmlFor='formControlLg'>
+                    Select Your Time Slot
+                  </label>
+                  <select
+                    name='slot'
+                    className='form-select'
+                    aria-label='Default select example'
+                  >
+                    {treatment?.slots?.map((slot, i) => {
+                      return (
+                        <option value={slot} key={i}>
+                          {slot}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <div className='form-outline'>
+                  <label className='form-label' htmlFor='formControlLg'>
+                    Name
+                  </label>
+                  <input
+                    type='text'
+                    name='name'
+                    id='formControlLg'
+                    className='form-control form-control-lg'
+                  />
+                </div>
+                <div className='form-outline'>
+                  <label className='form-label' htmlFor='formControlLg'>
+                    email
+                  </label>
+                  <input
+                    type='email'
+                    name='email'
+                    id='formControlLg'
+                    className='form-control form-control-lg'
+                  />
+                </div>
+                <div className='form-outline'>
+                  <label className='form-label' htmlFor='formControlLg'>
+                    Phone
+                  </label>
+                  <input
+                    type='text'
+                    name='phone'
+                    id='formControlLg'
+                    className='form-control form-control-lg'
+                  />
+                </div>
+                <button
+                  type='submit'
+                  className='btn primary-btn-color w-100 mt-3'
+                >
+                  Submit
+                </button>
+              </form>
+            </div>
             <div className='modal-footer'>
               <button
                 type='button'
@@ -36,9 +134,6 @@ const AppoinmentModal = ({ treatment }) => {
                 data-bs-dismiss='modal'
               >
                 Close
-              </button>
-              <button type='submit' className='btn primary-btn-color'>
-                Submit
               </button>
             </div>
           </div>
