@@ -1,8 +1,9 @@
 /** @format */
 
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/UserContext';
 import './Login.css';
 
 const Login = () => {
@@ -12,8 +13,23 @@ const Login = () => {
     handleSubmit,
   } = useForm();
 
+  const { login } = useContext(AuthContext);
+  const [loginError, setLoginError] = useState('');
+
   const handleLogin = (data) => {
     console.log(data);
+
+    setLoginError('');
+
+    login(data.email, data.password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+      })
+      .catch((err) => {
+        console.error(err.message);
+        setLoginError(err.message);
+      });
   };
 
   return (
@@ -67,6 +83,7 @@ const Login = () => {
             Check me out
           </label>
         </div>
+        {loginError && <p className='text-danger'>{loginError}</p>}
         {/* <p>{data}</p> */}
         <button type='submit' className='btn btn-primary'>
           Submit

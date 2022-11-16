@@ -1,8 +1,9 @@
 /** @format */
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/UserContext';
 
 const Register = () => {
   const {
@@ -10,8 +11,17 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const { registerUser } = useContext(AuthContext);
+
   const handleRegister = (data) => {
     console.log(data);
+    registerUser(data.email, data.password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+      })
+      .catch((err) => console.error(err));
   };
   return (
     <div className='container card p-5 mt-5'>
@@ -62,7 +72,8 @@ const Register = () => {
               minLength: { value: 4, message: 'Must be 4 charecters' },
               pattern: {
                 value: /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])/,
-                message: 'Password must be strong.',
+                message:
+                  'Password must 1 uppercase, 1 special charecter and a number.',
               },
             })}
             type='password'
