@@ -48,14 +48,26 @@ const Navbar = () => {
                 <Link className='nav-link fw-semibold'>About</Link>
               </li>
               {user?.uid ? (
-                <li className='nav-item'>
-                  <button
-                    onClick={handleLogout}
-                    className='btn nav-link fw-semibold'
-                  >
-                    Logout
-                  </button>
-                </li>
+                <>
+                  <li className='nav-item'>
+                    <Link to='/dashboard' className='nav-link fw-semibold'>
+                      Dashboard
+                    </Link>
+                  </li>
+                  <li className='nav-item'>
+                    <Link className='nav-link fw-semibold'>
+                      {user?.displayName}
+                    </Link>
+                  </li>
+                  <li className='nav-item'>
+                    <button
+                      onClick={handleLogout}
+                      className='btn nav-link fw-semibold'
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </>
               ) : (
                 <li className='nav-item'>
                   <Link to='/login' className='nav-link fw-semibold'>

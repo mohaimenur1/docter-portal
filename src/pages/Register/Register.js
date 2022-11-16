@@ -1,9 +1,10 @@
 /** @format */
 
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/UserContext';
+import toast from 'react-hot-toast';
 
 const Register = () => {
   const {
@@ -11,17 +12,30 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const { registerUser } = useContext(AuthContext);
+  const { registerUser, updateUserProfile } = useContext(AuthContext);
 
   const handleRegister = (data) => {
     console.log(data);
+    setErrorMessage('');
     registerUser(data.email, data.password)
       .then((result) => {
         const user = result.user;
+        toast('User Created Successfully');
         console.log(user);
+        const userInfo = {
+          displayName: data.name,
+        };
+
+        updateUserProfile(userInfo)
+          .then(() => {})
+          .catch((err) => console.error(err));
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        setErrorMessage(err.message);
+      });
   };
   return (
     <div className='container card p-5 mt-5'>
@@ -86,6 +100,7 @@ const Register = () => {
             </p>
           )}
         </div>
+        {errorMessage && <p className='text-danger'>{errorMessage}</p>}
         <div className='mb-3'>
           <p className='text-center' htmlFor='exampleCheck1'>
             <Link to='/login'>Already have an account?</Link>
