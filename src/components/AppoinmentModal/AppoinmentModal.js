@@ -1,11 +1,13 @@
 /** @format */
 
 import { format } from 'date-fns';
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../context/UserContext';
 import './AppoinmentModal.css';
 
 const AppoinmentModal = ({ selectedDate, treatment, setTreatment }) => {
   const date = format(selectedDate, 'PPP');
+  const { user } = useContext(AuthContext);
 
   const handleBooking = (e) => {
     e.preventDefault();
@@ -92,6 +94,8 @@ const AppoinmentModal = ({ selectedDate, treatment, setTreatment }) => {
                   <input
                     type='text'
                     name='name'
+                    defaultValue={user?.displayName}
+                    disabled
                     id='formControlLg'
                     className='form-control form-control-lg'
                   />
@@ -103,6 +107,8 @@ const AppoinmentModal = ({ selectedDate, treatment, setTreatment }) => {
                   <input
                     type='email'
                     name='email'
+                    defaultValue={user?.email}
+                    disabled
                     id='formControlLg'
                     className='form-control form-control-lg'
                   />

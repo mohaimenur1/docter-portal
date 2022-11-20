@@ -2,7 +2,7 @@
 
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/UserContext';
 import toast from 'react-hot-toast';
 
@@ -15,6 +15,8 @@ const Register = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const { registerUser, updateUserProfile } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const handleRegister = (data) => {
     console.log(data);
@@ -29,7 +31,9 @@ const Register = () => {
         };
 
         updateUserProfile(userInfo)
-          .then(() => {})
+          .then(() => {
+            navigate('/');
+          })
           .catch((err) => console.error(err));
       })
       .catch((err) => {

@@ -4,16 +4,26 @@ import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import AppoinmentModal from '../AppoinmentModal/AppoinmentModal';
 import AppoinmentOption from '../AppoinmentOptioin/AppoinmentOption';
+import { useQuery } from '@tanstack/react-query';
 
 const AvailableAppoinment = ({ selectedDate, setSelectedDate }) => {
-  const [appoinmentOptions, setAppoinmentOptions] = useState([]);
+  // const [appoinmentOptions, setAppoinmentOptions] = useState([]);
   const [treatment, setTreatment] = useState(null);
 
-  useEffect(() => {
-    fetch('appoinmentOptions.json')
-      .then((res) => res.json())
-      .then((data) => setAppoinmentOptions(data));
-  }, []);
+  const { data: appoinmentOptions = [] } = useQuery({
+    queryKey: ['appoinmentOptions'],
+    queryFn: async () => {
+      const res = await fetch('http://localhost:5000/appoinment');
+      const data = res.json();
+      return data;
+    },
+  });
+
+  // useEffect(() => {
+  //   fetch('http://localhost:5000/appoinment')
+  //     .then((res) => res.json())
+  //     .then((data) => setAppoinmentOptions(data));
+  // }, []);
 
   return (
     <div>

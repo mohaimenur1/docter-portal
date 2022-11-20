@@ -32,7 +32,7 @@ const UserContext = ({ children }) => {
 
   //update userprofile
   const updateUserProfile = (userInfo) => {
-    return updateProfile(user, userInfo);
+    return updateProfile(auth.currentUser, userInfo);
   };
 
   //logout
