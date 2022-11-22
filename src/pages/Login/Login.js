@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/UserContext';
 import './Login.css';
 import toast from 'react-hot-toast';
+import { GoogleAuthProvider } from 'firebase/auth';
 
 const Login = () => {
   const {
@@ -14,7 +15,9 @@ const Login = () => {
     handleSubmit,
   } = useForm();
 
-  const { login } = useContext(AuthContext);
+  const googleLoginProvider = new GoogleAuthProvider();
+
+  const { login, googleSignIn } = useContext(AuthContext);
   const [loginError, setLoginError] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
@@ -37,6 +40,16 @@ const Login = () => {
         console.error(err.message);
         setLoginError(err.message);
       });
+  };
+
+  const handleGoogleLogin = () => {
+    googleSignIn(googleLoginProvider)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        navigate(from, { replace: true });
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -108,6 +121,7 @@ const Login = () => {
           </button>
 
           <button
+            onClick={handleGoogleLogin}
             type='button'
             className='btn primary-btn-color btn-floating mx-1'
           >

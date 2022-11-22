@@ -2,12 +2,25 @@
 
 import { format } from 'date-fns';
 import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
 import { AuthContext } from '../../context/UserContext';
 import './AppoinmentModal.css';
 
-const AppoinmentModal = ({ selectedDate, treatment, setTreatment }) => {
+const AppoinmentModal = ({
+  selectedDate,
+  treatment,
+  setTreatment,
+  refetch,
+}) => {
   const date = format(selectedDate, 'PPP');
   const { user } = useContext(AuthContext);
+
+  function handleCloseModal() {
+    document.getElementById('myModal').classList.remove('show', 'd-block');
+    document
+      .querySelectorAll('.modal-backdrop')
+      .forEach((el) => el.classList.remove('modal-backdrop'));
+  }
 
   const handleBooking = (e) => {
     e.preventDefault();
@@ -18,7 +31,7 @@ const AppoinmentModal = ({ selectedDate, treatment, setTreatment }) => {
     const email = form.email.value;
     const phone = form.phone.value;
 
-    const details = {
+    const booking = {
       appoinmentDate: date,
       slot,
       treatment: treatment?.name,
@@ -27,8 +40,21 @@ const AppoinmentModal = ({ selectedDate, treatment, setTreatment }) => {
       phone,
     };
 
-    console.log(details);
-    setTreatment(null);
+    //fetching bookings post api data
+    fetch('http://localhost:5000/bookings', {
+      method: 'POST',
+      headers: {
+        'content-Type': 'application/json',
+      },
+      body: JSON.stringify(booking),
+    }).then((data) => {
+      console.log(data);
+      setTreatment(null);
+      toast('Booking confirm.');
+      refetch();
+    });
+
+    console.log(booking);
   };
 
   return (
@@ -125,21 +151,14 @@ const AppoinmentModal = ({ selectedDate, treatment, setTreatment }) => {
                   />
                 </div>
                 <button
+                  onClick={handleCloseModal}
                   type='submit'
+                  data-bs-dismiss='modal'
                   className='btn primary-btn-color w-100 mt-3'
                 >
                   Submit
                 </button>
               </form>
-            </div>
-            <div className='modal-footer'>
-              <button
-                type='button'
-                className='btn primary-btn-color'
-                data-bs-dismiss='modal'
-              >
-                Close
-              </button>
             </div>
           </div>
         </div>

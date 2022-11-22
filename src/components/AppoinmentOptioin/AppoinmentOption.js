@@ -19,6 +19,10 @@ const AppoinmentOption = ({ appoinment, treatment, setTreatment }) => {
               ? appoinment.slots[0]
               : 'No appoinment available!'}
           </p>
+          <p className='card-text'>
+            Appointment Remaining:
+            {appoinment.slots.length}
+          </p>
           <button
             data-bs-toggle='modal'
             onClick={() => setTreatment(appoinment)}
