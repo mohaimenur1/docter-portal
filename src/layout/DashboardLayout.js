@@ -10,7 +10,10 @@ const DashboardLayout = () => {
     <div>
       <Navbar />
 
-      <div className='d-flex' id='wrapper'>
+      <div
+        className='d-flex justify-content-center align-items-center'
+        id='wrapper'
+      >
         <div
           className='bg-white offcanvas offcanvas-end'
           tabindex='-1'
@@ -18,12 +21,9 @@ const DashboardLayout = () => {
           aria-labelledby='offcanvasNavbarLabel'
         >
           <div className='sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom'>
-            <i className='fas fa-user-secret me-2'></i>Codersbite
+            <i className='fas fa-user-secret me-2'></i>Admin Panel
           </div>
           <div className='offcanvas-header'>
-            <h5 className='offcanvas-title' id='offcanvasNavbarLabel'>
-              Offcanvas
-            </h5>
             <button
               type='button'
               className='btn-close'
@@ -90,7 +90,7 @@ const DashboardLayout = () => {
         </div>
 
         <div id='page-content-wrapper'>
-          <nav className='navbar  navbar-light bg-transparent py-4 px-4'>
+          <nav className='navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4'>
             <div
               className='d-flex align-items-center navbar-toggler'
               type='button'
@@ -99,7 +99,7 @@ const DashboardLayout = () => {
               aria-controls='offcanvasNavbar'
             >
               <i className='fas fa-align-left primary-text fs-4 me-3'></i>
-              <h2 className='fs-2 m-0'>Dashboard</h2>
+              <h2 className='fs-2 m-0'>Sidebar Dashboard</h2>
             </div>
 
             {/* <button
@@ -196,7 +196,7 @@ const DashboardLayout = () => {
               </div>
             </div>
 
-            <div className='row my-5'>
+            <div className='row my-5 d-flex justify-content-center'>
               <h3 className='fs-4 mb-3'>Recent Orders</h3>
               <div className='col'>
                 <table className='table bg-white rounded shadow-sm  table-hover'>
