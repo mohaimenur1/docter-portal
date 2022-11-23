@@ -32,7 +32,7 @@ const Register = () => {
 
         updateUserProfile(userInfo)
           .then(() => {
-            navigate('/');
+            saveUser(data.name, data.email);
           })
           .catch((err) => console.error(err));
       })
@@ -41,6 +41,26 @@ const Register = () => {
         setErrorMessage(err.message);
       });
   };
+
+  const saveUser = (name, email) => {
+    const user = {
+      name,
+      email,
+    };
+    fetch('http://localhost:5000/users', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        navigate('/');
+      });
+  };
+
   return (
     <div className='container card p-5 mt-5'>
       <h2 className='text-center display-5 fw-semibold'>Register</h2>
